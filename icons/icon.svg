@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="22" fill="#cc0000"/>
+  <!-- 階段状のバー (ランキング降順を示唆) -->
+  <rect x="22" y="78" width="20" height="28" rx="3" fill="white"/>
+  <rect x="48" y="60" width="20" height="46" rx="3" fill="white"/>
+  <rect x="74" y="42" width="20" height="64" rx="3" fill="white"/>
+  <!-- 頂点に小さな再生三角形 (YouTube らしさ) -->
+  <path d="M76 32 L96 32 L86 18 Z" fill="white"/>
+</svg>

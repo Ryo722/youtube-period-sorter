@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>期間別人気動画ソーター</title>
+    <link rel="stylesheet" href="results.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1 id="header-title">期間別人気動画</h1>
+        <div class="meta" id="header-meta"></div>
+        <div class="cache-badge" id="cache-badge" hidden></div>
+      </div>
+      <div class="controls">
+        <label>
+          期間
+          <select id="period-select">
+            <option value="1d">過去 24 時間</option>
+            <option value="1w">過去 1 週間</option>
+            <option value="1m">過去 1 か月</option>
+            <option value="3m">過去 3 か月</option>
+            <option value="6m">過去 6 か月</option>
+            <option value="1y">過去 1 年</option>
+            <option value="all">全期間</option>
+          </select>
+        </label>
+        <label>
+          件数
+          <select id="max-select">
+            <option value="50">50 件</option>
+            <option value="100">100 件</option>
+          </select>
+        </label>
+        <label>
+          並び順
+          <select id="sort-select">
+            <option value="viewCount" selected>再生回数</option>
+            <option value="likeCount">高評価</option>
+            <option value="commentCount">コメント数</option>
+            <option value="publishedAt">投稿日 (新しい順)</option>
+          </select>
+        </label>
+        <button id="reload-btn" type="button" title="キャッシュを使う">読み込み</button>
+        <button id="refresh-btn" type="button" class="secondary" title="API を再取得 (キャッシュを更新)">
+          強制再取得
+        </button>
+        <span class="control-divider"></span>
+        <button id="copy-btn" type="button" class="secondary" title="表示中のリストを TSV としてコピー">
+          コピー
+        </button>
+        <button id="csv-btn" type="button" class="secondary" title="表示中のリストを CSV ダウンロード">
+          CSV
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div id="loading" class="state">読み込み中…</div>
+      <div id="error" class="state error" hidden></div>
+      <div id="empty" class="state" hidden>該当する動画が見つかりませんでした。</div>
+      <ol id="video-list" class="video-list" hidden></ol>
+    </main>
+
+    <footer>
+      <small>
+        並び順は「再生回数の多い順」(YouTube Data API v3 の statistics.viewCount)。
+        キャッシュは 24 時間有効・最大 30 エントリ保持。
+      </small>
+    </footer>
+
+    <script src="results.js" type="module"></script>
+  </body>
+</html>
