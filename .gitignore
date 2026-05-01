@@ -25,6 +25,9 @@ docs/devlog/
 # If you don't want to commit them, uncomment:
 # docs/screenshots/
 
+# Store-listing artefacts (generated from docs/screenshots/ by scripts/resize-screenshots.py)
+docs/screenshots/store/
+
 # Node (if you ever add tooling)
 node_modules/
 npm-debug.log*
