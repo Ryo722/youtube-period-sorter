@@ -76,6 +76,11 @@ cp public/manifest.webmanifest "$OUT_DIR/"
 cp public/sw.js "$OUT_DIR/"
 cp public/index.html "$OUT_DIR/"
 
+# manifest screenshots (Chrome Rich Install UI 用; 拡張版では使わない)
+if [ -d public/screenshots ]; then
+  cp -R public/screenshots "$OUT_DIR/"
+fi
+
 # SW のキャッシュバージョンをビルド時刻に置換 (再デプロイで確実に新キャッシュへ切り替え)
 BUILD_TS=$(date +%Y%m%d%H%M%S)
 # macOS BSD sed 互換: -i '' を使用
