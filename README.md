@@ -4,6 +4,8 @@ YouTube チャンネルの動画を **指定した期間で絞り込み、再生
 
 公式 UI には「期間 × 人気順」の組み合わせ絞り込みがないため、これを補完するのが目的。
 
+**[Chrome ウェブストアからインストール](https://chromewebstore.google.com/detail/youtube-%E6%9C%9F%E9%96%93%E5%88%A5%E4%BA%BA%E6%B0%97%E5%8B%95%E7%94%BB%E3%82%BD%E3%83%BC%E3%82%BF%E3%83%BC/gcoblkekjbplafeafmdgcghlcnenfdfp)**
+
 ---
 
 ## 構成
@@ -17,7 +19,13 @@ background/service-worker.js   # YouTube Data API v3 呼び出し
 lib/youtube-api.js         # API ラッパー
 ```
 
-## インストール (未パッケージ拡張として読み込む)
+## インストール
+
+### Chrome ウェブストア (推奨)
+
+[ストアページからインストール](https://chromewebstore.google.com/detail/youtube-%E6%9C%9F%E9%96%93%E5%88%A5%E4%BA%BA%E6%B0%97%E5%8B%95%E7%94%BB%E3%82%BD%E3%83%BC%E3%82%BF%E3%83%BC/gcoblkekjbplafeafmdgcghlcnenfdfp)
+
+### 開発版 (未パッケージ拡張として読み込む)
 
 1. Chrome で `chrome://extensions/` を開く
 2. 右上の **「デベロッパーモード」** を ON
