@@ -18,6 +18,13 @@
   ],
   "screenshots": [
     {
+      "src": "screenshots/narrow-popup.png",
+      "sizes": "827x1791",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "モバイルでの起動画面"
+    },
+    {
       "src": "screenshots/wide-results.png",
       "sizes": "1280x800",
       "type": "image/png",
