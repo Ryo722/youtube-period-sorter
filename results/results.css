@@ -222,3 +222,81 @@ footer {
   padding: 24px;
   color: var(--fg-muted);
 }
+
+/* モバイル / PWA 専用: html[data-platform="web"] でガード (拡張版では未発動) */
+@media (max-width: 480px) {
+  html[data-platform="web"] body {
+    font-size: 15px;
+  }
+  html[data-platform="web"] header {
+    padding: 12px 14px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+  html[data-platform="web"] .header-inner h1 {
+    font-size: 16px;
+  }
+  html[data-platform="web"] .meta {
+    font-size: 11px;
+  }
+  html[data-platform="web"] .controls {
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+  html[data-platform="web"] .controls label {
+    flex: 1 1 calc(50% - 4px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 12px;
+  }
+  html[data-platform="web"] .controls select {
+    flex: 1;
+    margin-left: 4px;
+    font-size: 16px; /* iOS の自動ズーム抑止 */
+    padding: 8px 10px;
+    min-height: 44px;
+  }
+  html[data-platform="web"] .controls button {
+    flex: 1 1 calc(50% - 4px);
+    font-size: 14px;
+    min-height: 44px;
+    padding: 10px 12px;
+  }
+  html[data-platform="web"] .control-divider {
+    display: none;
+  }
+  html[data-platform="web"] main {
+    padding: 12px 14px max(80px, env(safe-area-inset-bottom));
+  }
+  html[data-platform="web"] .video-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  html[data-platform="web"] .video-card {
+    border-radius: 8px;
+  }
+  html[data-platform="web"] .video-card:hover {
+    transform: none; /* ホバー演出はモバイルで無効化 */
+  }
+  html[data-platform="web"] .card-body {
+    padding: 10px 12px 14px;
+  }
+  html[data-platform="web"] .video-title {
+    font-size: 15px;
+  }
+  html[data-platform="web"] .stats {
+    font-size: 12px;
+  }
+  html[data-platform="web"] .toast {
+    bottom: max(20px, env(safe-area-inset-bottom));
+    font-size: 13px;
+  }
+  html[data-platform="web"] footer {
+    padding: 16px 14px max(24px, env(safe-area-inset-bottom));
+    font-size: 11px;
+  }
+}

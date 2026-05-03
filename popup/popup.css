@@ -107,3 +107,51 @@ footer {
 }
 footer a { color: var(--fg-muted); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
+
+/* モバイル / PWA 専用: html[data-platform="web"] でガードして
+   拡張版 popup (chrome-extension://, 360x600 固定枠) では発動しないようにする。 */
+@media (max-width: 480px) {
+  html[data-platform="web"] body {
+    min-width: 100%;
+    font-size: 16px;
+  }
+  html[data-platform="web"] main {
+    padding: 16px 16px max(20px, env(safe-area-inset-bottom)) 16px;
+  }
+  html[data-platform="web"] h1 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  html[data-platform="web"] label {
+    font-size: 13px;
+  }
+  html[data-platform="web"] input[type="text"],
+  html[data-platform="web"] select {
+    font-size: 16px; /* iOS Safari の自動ズーム抑止 */
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  html[data-platform="web"] button {
+    font-size: 15px;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+  html[data-platform="web"] .hint {
+    font-size: 12px;
+    min-height: 16px;
+  }
+  html[data-platform="web"] .status {
+    font-size: 13px;
+  }
+  html[data-platform="web"] footer {
+    text-align: center;
+    padding-top: 12px;
+    margin-top: 16px;
+  }
+  html[data-platform="web"] footer a {
+    display: inline-block;
+    padding: 8px 12px;
+    min-height: 44px;
+    line-height: 28px;
+  }
+}

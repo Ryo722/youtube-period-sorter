@@ -148,3 +148,70 @@ button.ghost {
   font-size: 11.5px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+
+/* モバイル / PWA 専用: html[data-platform="web"] でガード
+   options 画面は拡張版でも 480px 以下になり得る (ウィンドウ縮小) ため、
+   拡張版では発動させずデスクトップ前提のレイアウトを維持する。 */
+@media (max-width: 480px) {
+  html[data-platform="web"] body {
+    font-size: 15px;
+  }
+  html[data-platform="web"] main {
+    padding: 16px 14px max(24px, env(safe-area-inset-bottom));
+    padding-top: max(16px, env(safe-area-inset-top));
+  }
+  html[data-platform="web"] h1 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  html[data-platform="web"] h2 {
+    font-size: 14px;
+  }
+  html[data-platform="web"] section {
+    padding: 14px 14px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+  }
+  html[data-platform="web"] .desc {
+    font-size: 12px;
+  }
+  html[data-platform="web"] .field {
+    flex-direction: column;
+    gap: 8px;
+  }
+  html[data-platform="web"] input[type="password"],
+  html[data-platform="web"] input[type="text"] {
+    width: 100%;
+    font-size: 16px; /* iOS の自動ズーム抑止 */
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  html[data-platform="web"] .actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  html[data-platform="web"] button {
+    flex: 1 1 auto;
+    font-size: 14px;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+  html[data-platform="web"] button.ghost {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 10px 14px;
+    min-height: 44px;
+  }
+  html[data-platform="web"] .status {
+    font-size: 12px;
+  }
+  html[data-platform="web"] .howto ol {
+    padding-left: 18px;
+  }
+  html[data-platform="web"] .howto li {
+    font-size: 12.5px;
+  }
+  html[data-platform="web"] .howto ul.sub li {
+    font-size: 12px;
+  }
+}
