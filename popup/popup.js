@@ -1,9 +1,27 @@
-// 現在のタブ URL から YouTube チャンネルを推定し、フォームに反映する
-// サポート URL 例:
-//   https://www.youtube.com/@handle
-//   https://www.youtube.com/@handle/videos
-//   https://www.youtube.com/channel/UCxxxx
-//   https://www.youtube.com/watch?v=... (この場合はチャンネル不明 → 手動入力)
+// 拡張アイコン (popup) または PWA エントリページの初期化
+//
+// chrome.* には直接触らず lib/platform/* 経由で操作する。
+// 拡張モードでは現在のタブ URL から、PWA モードでは Web Share Target / URL クエリから
+// チャンネルを推定して入力欄に流し込む。
+
+import { storage } from "../lib/platform/storage.js";
+import { getActiveYouTubeChannel } from "../lib/platform/tabs.js";
+import { openResultsPage, openOptions } from "../lib/platform/runtime.js";
+import { isExtension, markPlatform } from "../lib/platform/env.js";
+
+// CSS のレスポンシブ条件分岐で参照するため、html 要素に platform 属性を付与する。
+markPlatform();
+
+// PWA モードでのみ Service Worker を登録 (拡張モードでは manifest.json で自動登録される)。
+// scope を popup/ ではなくサイトルート (../) に揃えることで、results / options / icons など
+// 全ページで同じ SW が有効になる。
+if (!isExtension() && "serviceWorker" in navigator) {
+  const swUrl = new URL("../sw.js", import.meta.url).href;
+  const scope = new URL("../", import.meta.url).href;
+  navigator.serviceWorker.register(swUrl, { scope }).catch((err) =>
+    console.error("[yt-period-sorter] SW register failed:", err?.message || err),
+  );
+}
 
 const channelInput = document.getElementById("channel-input");
 const channelHint = document.getElementById("channel-hint");
@@ -13,29 +31,9 @@ const searchBtn = document.getElementById("search-btn");
 const status = document.getElementById("status");
 const openOptionsLink = document.getElementById("open-options");
 
-function parseChannelFromUrl(rawUrl) {
-  if (!rawUrl) return null;
-  let url;
-  try {
-    url = new URL(rawUrl);
-  } catch {
-    return null;
-  }
-  if (!/(^|\.)youtube\.com$/.test(url.hostname)) return null;
-
-  const segments = url.pathname.split("/").filter(Boolean);
-  if (segments.length === 0) return null;
-
-  const first = decodeURIComponent(segments[0]);
-  if (first.startsWith("@")) return first; // @handle
-  if (first === "channel" && segments[1]) return segments[1]; // UC...
-  return null;
-}
-
 async function init() {
   try {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    const detected = parseChannelFromUrl(tab?.url);
+    const detected = await getActiveYouTubeChannel();
     if (detected) {
       channelInput.value = detected;
       channelHint.textContent = "現在のタブから検出しました";
@@ -47,7 +45,7 @@ async function init() {
   }
 
   try {
-    const { lastPeriod, lastMaxResults } = await chrome.storage.local.get([
+    const { lastPeriod, lastMaxResults } = await storage.get([
       "lastPeriod",
       "lastMaxResults",
     ]);
@@ -59,7 +57,7 @@ async function init() {
 }
 
 async function ensureApiKey() {
-  const { apiKey } = await chrome.storage.local.get("apiKey");
+  const { apiKey } = await storage.get("apiKey");
   return Boolean(apiKey);
 }
 
@@ -83,11 +81,11 @@ async function onSearch() {
 
   const period = periodSelect.value;
   const maxResults = Number(maxSelect.value) || 50;
-  await chrome.storage.local.set({ lastPeriod: period, lastMaxResults: maxResults });
+  await storage.set({ lastPeriod: period, lastMaxResults: maxResults });
 
   const params = new URLSearchParams({ channel, period, max: String(maxResults) });
-  const resultsUrl = chrome.runtime.getURL(`results/results.html?${params.toString()}`);
-  await chrome.tabs.create({ url: resultsUrl });
+  await openResultsPage(params);
+  // 拡張版 (popup) では popup を閉じる。PWA では効果なしだが害もない。
   window.close();
 }
 
@@ -97,7 +95,7 @@ channelInput.addEventListener("keydown", (e) => {
 });
 openOptionsLink.addEventListener("click", (e) => {
   e.preventDefault();
-  chrome.runtime.openOptionsPage();
+  openOptions();
 });
 
 init().catch((err) =>

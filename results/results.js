@@ -1,3 +1,10 @@
+import { storage } from "../lib/platform/storage.js";
+import { fetchPopularVideos } from "../lib/platform/messaging.js";
+import { markPlatform } from "../lib/platform/env.js";
+
+// CSS のレスポンシブ条件分岐で参照するため、html 要素に platform 属性を付与する。
+markPlatform();
+
 const PERIOD_LABEL = {
   "1d": "過去 24 時間",
   "1w": "過去 1 週間",
@@ -54,14 +61,14 @@ refreshBtn.addEventListener("click", () => load({ forceRefresh: true }));
 periodSelect.addEventListener("change", () => load({ forceRefresh: false }));
 maxSelect.addEventListener("change", () => load({ forceRefresh: false }));
 sortSelect.addEventListener("change", () => {
-  chrome.storage.local.set({ lastSort: sortSelect.value }).catch(() => {});
+  storage.set({ lastSort: sortSelect.value }).catch(() => {});
   applySortAndRender();
 });
 copyBtn.addEventListener("click", onCopy);
 csvBtn.addEventListener("click", onDownloadCsv);
 
 async function loadInitialSort() {
-  const { lastSort } = await chrome.storage.local.get("lastSort");
+  const { lastSort } = await storage.get("lastSort");
   if (lastSort && SORT_LABEL[lastSort]) sortSelect.value = lastSort;
 }
 
@@ -153,18 +160,15 @@ async function load({ forceRefresh }) {
     ? "API から再取得中…"
     : `読み込み中… (最大 ${maxResults} 件)`;
 
-  // sendMessage は service worker が未起動・例外時に reject する。
-  // unhandled rejection で「読み込み中…」のまま固まらないよう全体を try/catch で囲む。
-  let response;
-  try {
-    response = await chrome.runtime.sendMessage({
-      type: "FETCH_POPULAR_VIDEOS",
-      payload: { channelInput, period, maxResults, forceRefresh },
-    });
-  } catch (err) {
-    showError(`通信エラー: ${err?.message || err}`);
-    return;
-  }
+  // messaging.fetchPopularVideos は { ok, data | error } 形式で返り、
+  // 拡張モードでは sendMessage、PWA モードでは backend を直接呼び出す。
+  // どちらの経路でも transport エラーは ok:false で整形される。
+  const response = await fetchPopularVideos({
+    channelInput,
+    period,
+    maxResults,
+    forceRefresh,
+  });
 
   if (!response?.ok) {
     const err = response?.error;

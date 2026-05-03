@@ -1,3 +1,14 @@
+// オプション画面: API キー管理 + キャッシュ操作
+//
+// chrome.* には直接触らず lib/platform/* 経由でストレージ・キャッシュ操作を行う。
+
+import { storage } from "../lib/platform/storage.js";
+import { cacheStats, clearCache } from "../lib/platform/messaging.js";
+import { markPlatform } from "../lib/platform/env.js";
+
+// CSS のレスポンシブ条件分岐で参照するため、html 要素に platform 属性を付与する。
+markPlatform();
+
 const apiKeyInput = document.getElementById("api-key");
 const toggleBtn = document.getElementById("toggle-visibility");
 const saveBtn = document.getElementById("save-btn");
@@ -13,7 +24,7 @@ function setStatus(text, kind) {
 
 async function loadKey() {
   try {
-    const { apiKey } = await chrome.storage.local.get("apiKey");
+    const { apiKey } = await storage.get("apiKey");
     if (apiKey) apiKeyInput.value = apiKey;
   } catch (err) {
     setStatus(`読み込みに失敗しました: ${err?.message || err}`, "error");
@@ -27,7 +38,7 @@ async function saveKey() {
     return;
   }
   try {
-    await chrome.storage.local.set({ apiKey: value });
+    await storage.set({ apiKey: value });
     setStatus("保存しました", "success");
   } catch (err) {
     setStatus(`保存に失敗しました: ${err?.message || err}`, "error");
@@ -68,7 +79,7 @@ async function testKey() {
 async function deleteKey() {
   if (!confirm("API キーを削除しますか? (この操作は元に戻せません)")) return;
   try {
-    await chrome.storage.local.remove("apiKey");
+    await storage.remove("apiKey");
     apiKeyInput.value = "";
     apiKeyInput.type = "password";
     toggleBtn.textContent = "表示";
@@ -99,7 +110,7 @@ function setCacheStatus(text, kind) {
 }
 
 cacheStatsBtn.addEventListener("click", async () => {
-  const res = await chrome.runtime.sendMessage({ type: "CACHE_STATS" });
+  const res = await cacheStats();
   if (res?.ok) {
     setCacheStatus(`現在 ${res.data.count} / ${res.data.max} 件のキャッシュを保持しています`, null);
   } else {
@@ -109,7 +120,7 @@ cacheStatsBtn.addEventListener("click", async () => {
 
 cacheClearBtn.addEventListener("click", async () => {
   if (!confirm("キャッシュをすべて削除しますか?")) return;
-  const res = await chrome.runtime.sendMessage({ type: "CLEAR_CACHE" });
+  const res = await clearCache();
   if (res?.ok) {
     setCacheStatus(`${res.removed} 件のキャッシュを削除しました`, "success");
   } else {
