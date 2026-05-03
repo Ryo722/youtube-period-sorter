@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>期間別人気動画ソーター</title>
+    <link rel="stylesheet" href="popup.css" />
+      <link rel="manifest" href="../manifest.webmanifest" />
+    <meta name="theme-color" content="#cc0000" />
+    <link rel="icon" href="../icons/icon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="../icons/icon-192.png" />
+  </head>
+  <body>
+    <main>
+      <h1>期間別人気動画ソーター</h1>
+
+      <section class="field">
+        <label for="channel-input">チャンネル</label>
+        <input
+          id="channel-input"
+          type="text"
+          placeholder="@handle または UC... のチャンネル ID"
+          autocomplete="off"
+        />
+        <p id="channel-hint" class="hint"></p>
+      </section>
+
+      <section class="field">
+        <label for="period-select">期間</label>
+        <select id="period-select">
+          <option value="1d">過去 24 時間</option>
+          <option value="1w">過去 1 週間</option>
+          <option value="1m" selected>過去 1 か月</option>
+          <option value="3m">過去 3 か月</option>
+          <option value="6m">過去 6 か月</option>
+          <option value="1y">過去 1 年</option>
+          <option value="all">全期間</option>
+        </select>
+      </section>
+
+      <section class="field">
+        <label for="max-select">最大件数</label>
+        <select id="max-select">
+          <option value="50" selected>50 件</option>
+          <option value="100">100 件</option>
+        </select>
+      </section>
+
+      <button id="search-btn" type="button">人気順で表示</button>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <footer>
+        <a href="#" id="open-options">API キー設定</a>
+      </footer>
+    </main>
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

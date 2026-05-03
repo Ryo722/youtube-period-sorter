@@ -14,8 +14,16 @@ cd "$(dirname "$0")/.."
 
 ROOT="$(pwd)"
 DIST="$ROOT/dist"
-OUT_DIR="$DIST/pwa"
+# OUT_DIR は環境変数で上書き可能 (GitHub Pages 同居デプロイ用に docs/app などへ向けるケース)。
+# 例: OUT_DIR=docs/app ./scripts/build-pwa.sh
+OUT_DIR="${OUT_DIR:-$DIST/pwa}"
+# OUT_DIR が相対パスでも動くように絶対パス化
+case "$OUT_DIR" in
+  /*) ;;
+  *) OUT_DIR="$ROOT/$OUT_DIR" ;;
+esac
 mkdir -p "$DIST"
+mkdir -p "$(dirname "$OUT_DIR")"
 
 VERSION=$(grep -E '^\s*"version"\s*:' manifest.json | head -1 | sed -E 's/.*"version"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
 if [ -z "$VERSION" ]; then
@@ -129,5 +137,6 @@ echo "ローカル動作確認:"
 echo "  cd $OUT_DIR && python3 -m http.server 8000"
 echo "  → http://localhost:8000/ にアクセス"
 echo
-echo "デプロイ例 (GitHub Pages):"
-echo "  $OUT_DIR/ の中身を gh-pages ブランチに push"
+echo "デプロイ例:"
+echo "  - gh-pages ブランチ運用: $OUT_DIR/ の中身を gh-pages へ push"
+echo "  - docs/ 同居 (推奨): OUT_DIR=docs/app ./scripts/build-pwa.sh で main にコミット"

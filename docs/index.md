@@ -11,11 +11,15 @@ YouTube チャンネルの動画を **指定した期間で絞り込み、再生
 
 ## **[Chrome ウェブストアからインストール](https://chromewebstore.google.com/detail/youtube-%E6%9C%9F%E9%96%93%E5%88%A5%E4%BA%BA%E6%B0%97%E5%8B%95%E7%94%BB%E3%82%BD%E3%83%BC%E3%82%BF%E3%83%BC/gcoblkekjbplafeafmdgcghlcnenfdfp)**
 
+📱 **スマホ (iOS / Android) で使う場合は [スマホ版 (PWA) インストール手順](./MOBILE.md) を参照してください。**
+
 ---
 
 ## リンク
 
 - [Chrome ウェブストア](https://chromewebstore.google.com/detail/youtube-%E6%9C%9F%E9%96%93%E5%88%A5%E4%BA%BA%E6%B0%97%E5%8B%95%E7%94%BB%E3%82%BD%E3%83%BC%E3%82%BF%E3%83%BC/gcoblkekjbplafeafmdgcghlcnenfdfp)
+- [スマホ版 (PWA) インストール手順](./MOBILE.md)
+- [PWA を直接開く](./app/)
 - [GitHub リポジトリ](https://github.com/Ryo722/youtube-period-sorter)
 - [README (インストール手順 / API キー取得)](https://github.com/Ryo722/youtube-period-sorter#readme)
 - [ライセンス (MIT)](https://github.com/Ryo722/youtube-period-sorter/blob/main/LICENSE)

@@ -6,6 +6,8 @@ YouTube チャンネルの動画を **指定した期間で絞り込み、再生
 
 **[Chrome ウェブストアからインストール](https://chromewebstore.google.com/detail/youtube-%E6%9C%9F%E9%96%93%E5%88%A5%E4%BA%BA%E6%B0%97%E5%8B%95%E7%94%BB%E3%82%BD%E3%83%BC%E3%82%BF%E3%83%BC/gcoblkekjbplafeafmdgcghlcnenfdfp)**
 
+📱 **スマホ (iOS / Android) で使う場合は [docs/MOBILE.md](docs/MOBILE.md) (PWA 版インストール手順) を参照してください。**
+
 ---
 
 ## 構成

@@ -1,0 +1,157 @@
+:root {
+  color-scheme: light dark;
+  --fg: #1f1f1f;
+  --fg-muted: #555;
+  --bg: #ffffff;
+  --border: #d0d7de;
+  --accent: #cc0000;
+  --accent-hover: #a30000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #f1f1f1;
+    --fg-muted: #aaa;
+    --bg: #1f1f1f;
+    --border: #3a3a3a;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--bg);
+  min-width: 320px;
+}
+
+main {
+  padding: 14px 16px 12px;
+}
+
+h1 {
+  font-size: 14px;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--fg-muted);
+  margin-bottom: 4px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.hint {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--fg-muted);
+  min-height: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover { background: var(--accent-hover); }
+button:disabled { background: #888; cursor: not-allowed; }
+
+.status {
+  min-height: 16px;
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+.status.error { color: #d93025; }
+
+footer {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  font-size: 12px;
+  text-align: right;
+}
+footer a { color: var(--fg-muted); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* モバイル / PWA 専用: html[data-platform="web"] でガードして
+   拡張版 popup (chrome-extension://, 360x600 固定枠) では発動しないようにする。 */
+@media (max-width: 480px) {
+  html[data-platform="web"] body {
+    min-width: 100%;
+    font-size: 16px;
+  }
+  html[data-platform="web"] main {
+    padding: 16px 16px max(20px, env(safe-area-inset-bottom)) 16px;
+  }
+  html[data-platform="web"] h1 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  html[data-platform="web"] label {
+    font-size: 13px;
+  }
+  html[data-platform="web"] input[type="text"],
+  html[data-platform="web"] select {
+    font-size: 16px; /* iOS Safari の自動ズーム抑止 */
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  html[data-platform="web"] button {
+    font-size: 15px;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+  html[data-platform="web"] .hint {
+    font-size: 12px;
+    min-height: 16px;
+  }
+  html[data-platform="web"] .status {
+    font-size: 13px;
+  }
+  html[data-platform="web"] footer {
+    text-align: center;
+    padding-top: 12px;
+    margin-top: 16px;
+  }
+  html[data-platform="web"] footer a {
+    display: inline-block;
+    padding: 8px 12px;
+    min-height: 44px;
+    line-height: 28px;
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "YouTube 期間別人気動画ソーター",
+  "short_name": "YT 期間ソーター",
+  "description": "YouTube チャンネルの動画を指定した期間で絞り込み、人気順 (再生回数順) で表示します。",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#cc0000",
+  "lang": "ja",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/narrow-popup.png",
+      "sizes": "827x1791",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "モバイルでの起動画面"
+    },
+    {
+      "src": "screenshots/wide-results.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "期間で絞り込んだ動画一覧"
+    },
+    {
+      "src": "screenshots/wide-sort.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "再生回数・公開日・タイトルで並び替え"
+    },
+    {
+      "src": "screenshots/wide-export.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "結果を CSV / JSON にエクスポート"
+    }
+  ],
+  "share_target": {
+    "action": "./",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "url": "url",
+      "text": "text",
+      "title": "title"
+    }
+  }
+}
